@@ -39,7 +39,7 @@ function Type({ orderType }) {
 		<>
 			<h2>주문 종류</h2>
 			<p>하나의 가격</p>
-			<p>총 가격: </p>
+			<p>{orderType === 'products' ? '상품' : '옵션'} 총 가격: </p>
 			<div
 				style={{
 					display: 'flex',
