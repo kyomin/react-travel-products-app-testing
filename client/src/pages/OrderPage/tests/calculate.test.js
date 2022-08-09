@@ -1,9 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { OrderContextProvider } from '../../../contexts/OrderContext';
 import Type from '../Type';
 
 test("update product's total when products change", async () => {
-	render(<Type orderType='products' />);
+	render(<Type orderType='products' />, {wrapper: OrderContextProvider});
 
 	/*
     option으로 { exact: false }을 사용하면 
