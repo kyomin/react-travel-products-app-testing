@@ -1,6 +1,6 @@
 import { useState, useEffect, createContext, useMemo } from 'react';
 
-const OrderContext = createContext();
+export const OrderContext = createContext();
 
 /* 
   상품은 각각 1000원,
