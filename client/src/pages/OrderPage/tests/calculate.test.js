@@ -15,7 +15,7 @@ test("update product's total when products change", async () => {
 
 	// America 여행 상품 한 개 올리기
 	const americaInput = await screen.findByRole('spinbutton', {
-		name: 'America',
+		name: 'America'
 	});
 
 	userEvent.clear(americaInput);
@@ -24,3 +24,36 @@ test("update product's total when products change", async () => {
 	// America 여행 상품을 한 개 올렸으면 가격은 '1000'원으로 표시될 것으로 예상한다.
 	expect(productTotal).toHaveTextContent('1000');
 });
+
+test("update option's total when options change", async () => {
+	render(<Type orderType='options' />);
+
+	const optionsTotal = screen.getByText('옵션 총 가격: ', { exact: false });
+	expect(optionsTotal).toHaveTextContent('0');
+
+	/* Insurance 옵션 체크 시의 테스트 코드 */
+	const insuranceCheckbox = await screen.findByRole('checkbox', {
+		name: 'Insurance'
+	});
+
+	userEvent.click(insuranceCheckbox);
+
+	// Insurance 체크박스를 체크했다면 가격은 '500'원으로 표시될 것으로 예상한다.
+	expect(optionsTotal).toHaveTextContent('500');
+
+	
+	/* Dinner 옵션 체크 시의 테스트 코드 */
+	const dinnerCheckbox = await screen.findByRole('checkbox', {
+		name: 'Dinner'
+	});
+
+	userEvent.click(dinnerCheckbox);
+
+	// Dinner 체크박스를 추가로 체크했다면 가격은 '1000'원으로 표시될 것으로 예상한다.
+	expect(optionsTotal).toHaveTextContent('1000');
+
+	userEvent.click(dinnerCheckbox);
+
+	// Dinner 체크박스를 다시 체크해 해제했다면 가격은 '500'원으로 표시될 것으로 예상한다.
+	expect(optionsTotal).toHaveTextContent('500');
+})
