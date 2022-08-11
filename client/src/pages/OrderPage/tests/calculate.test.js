@@ -1,6 +1,7 @@
 import { render, screen } from '../../../test-utils';
 import userEvent from '@testing-library/user-event';
 import Type from '../Type';
+import OrderPage from '../OrderPage';
 
 test("update product's total when products change", async () => {
 	render(<Type orderType='products' />);
@@ -56,4 +57,62 @@ test("update option's total when options change", async () => {
 
 	// Dinner 체크박스를 다시 체크해 해제했다면 가격은 '500'원으로 표시될 것으로 예상한다.
 	expect(optionsTotal).toHaveTextContent('500');
-})
+});
+
+// describe로 여러 개의 테스트 그룹을 만든다
+describe("total price of goods and options", () => {
+	test("total price starts with 0 and Updating total price when adding one product", async () => {
+		render(<OrderPage />);
+
+		const total = screen.getByText('최종 가격: ', { exact: false });
+		expect(total).toHaveTextContent('0');
+
+		const americaInput = await screen.findByRole('spinbutton', {
+			name: 'America'
+		});
+
+		userEvent.clear(americaInput);
+		userEvent.type(americaInput, '1');
+
+		expect(total).toHaveTextContent('1000');
+	});
+
+	test("Updating total price when adding one option", async () => {
+		render(<OrderPage />);
+
+		const total = screen.getByText('최종 가격: ', { exact: false });
+
+		const insuranceCheckbox = await screen.findByRole('checkbox', {
+			name: 'Insurance'
+		});
+
+		userEvent.click(insuranceCheckbox);
+
+		expect(total).toHaveTextContent('500');
+	});
+
+	test("Updating total price when removing option and product", async () => {
+		render(<OrderPage />);
+
+		const total = screen.getByText('최종 가격: ', { exact: false });
+
+		/* Insurance 체크박스 클릭 */
+		const insuranceCheckbox = await screen.findByRole('checkbox', {
+			name: 'Insurance'
+		});
+		userEvent.click(insuranceCheckbox);
+		expect(total).toHaveTextContent('500');
+
+		/* America 상품 3개 */
+		const americaInput = await screen.findByRole('spinbutton', {
+			name: 'America'
+		});
+		userEvent.clear(americaInput);
+		userEvent.type(americaInput, '3');
+		
+		/* America 상품 1개로 줄임 */
+		userEvent.clear(americaInput);
+		userEvent.type(americaInput, '1');
+		expect(total).toHaveTextContent('1500');
+	});
+});
