@@ -46,6 +46,13 @@ export function OrderContextProvider(props) {
 		total: 0,
 	});
 
+	const resetOrderDatas = () => {
+		setOrderCounts({
+			products: new Map(),
+			options: new Map()
+		});
+	}
+
 	useEffect(() => {
 		const productsTotal = calculateSubTotal('products', orderCounts);
 		const optionsTotal = calculateSubTotal('options', orderCounts);
@@ -79,7 +86,7 @@ export function OrderContextProvider(props) {
       const [a, b] = [1, 2];  // a=1, b=2
       와 같은 배열의 구조 분해 할당을 의도한다.
     */
-		return [{ ...orderCounts, totals }, updateItemCount];
+		return [{ ...orderCounts, totals }, updateItemCount, resetOrderDatas];
 	}, [orderCounts, totals]);
 
 	return <OrderContext.Provider value={value} {...props} />;
