@@ -1,70 +1,159 @@
-# Getting Started with Create React App
+# 들어가기에 앞서
+`TDD`, 즉 `테스트 주도 개발(Test Driven Development)`에 대한 프로그래머들의 의견은 늘 엇갈린다.   
+TDD의 실효성을 업무로 경험한 사람들은 TDD를 더 효과적으로 실무에 적용하기 위해 고민한다.   
+반면, 회사마다 일하는 방식이나 처한 업무 환경에 편차가 있다보니 일각에서는 실무에서 TDD를 사용하는 건 사실상 현실과 괴리감이 크다는 의견도 있다.   
+   
+사실 테스트 주도 개발은 완전히 새롭거나 낯선 것이 아니다.   
+개발자가 회사에서 일하는 루틴에 대해 한 번 생각해보자.   
+보통은 이미 완성되어 배포된 제품이나 내부 시스템에 대한 버그 제보가 들어온다.   
+담당 프로그래머는 제보 받은 버그를 자리에서 재현해본다.   
+대부분은 이렇게 말할 것이다.   
+`제 자리에서는 잘 되는데요!`   
+   
+물론, 프로그래머의 자리에서도 버그가 동일하게 발생한다면, 그 다음 할 일은 코드를 수정하는 것이다.   
+수정 후 버그를 다시 재현해보고, 해결되지 않는다면 다시 코드를 수정할 것이다.   
+이 과정을 여러 번 반복하여 문제가 있는 코드를 개선해나가는 방식이다.   
+이는 TDD의 프로세스에서 몇 가지 단계만 빠졌을 뿐이다.   
+결국, `이미 많은 프로그래머들이 일하는 방식과 테스트 주도 개발 방법론은 유사한 점이 많다`는 것을 알 수 있다.   
+   
+그렇다면 TDD는 정확히 무엇일까?   
+   
+# TDD란?
+`테스트 주도 개발(TDD)`은 소프트웨어를 개발하는 여러 방법론 중 하나이다.   
+제품이 오류 없이 정상 작동하는지 확인하기 위해 모든 코드는 프로그래머가 작성하고 나서 테스트를 거치게 된다.   
+TDD에서는 제품의 기능 구현을 위한 코드와 별개로, 해당 기능이 정상적으로 움직이는지 검증하기 위한 테스트 코드를 작성한다.   
+이를 통해 테스트가 실패할 경우, 테스트를 통과하기 위한 최소한으로 코드를 개선한다.   
+최종적으로 테스트에 성공한 코드를 리팩토링 하는 과정을 거친다.   
+   
+# TDD의 효과는?
+### 코드가 내 손을 벗어나기 전에 가장 빠르게 피드백 받을 수 있다.
+개발 프로세스에서는 보통 `인수 테스트`를 한다.   
+이미 배치된 시스템을 대상으로 클라이언트가 의뢰한 소프트웨어가 사용자 관점에서 사용할 수 있는 수준인지 체크하는 과정이다.   
+이미 90% 이상 완성된 코드를 가지고 테스트하기 때문에 문제를 발견할 수는 있다.   
+다만, 정확하게 원인이 무엇인지 진단하기는 힘들다.   
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### 작성한 코드가 가지는 불안정성을 개선하여 생산성을 높일 수 있다.
+`켄트 백`은 TDD는 불안함을 지루함으로 바꾸는 마법의 돌이라고 말했다.   
+앞서 말한 것처럼 TDD를 사용하면, 코드가 내 손을 떠나 사용자에게 도달하기 전에 `문제가 없는지 먼저 진단 받을 수 있다.`   
+그러므로 코드가 지닌 불안정성과 불확실성을 지속적으로 해소해준다.   
 
-## Available Scripts
+### 프로그래머의 오버 엔지니어링을 방지한다.
+TDD는 사실 지루한 작업이다.   
+그렇다 보니, 프로그래머들은 간혹 계획하지 않았던 코드를 추가하여 오버 엔지니어링하는 경우가 있다.   
+하지만 TDD의 원칙 중 하나는, 테스트를 통과하기 위한 최소한의 코드만 작성 및 개선해야 한다는 것이다.   
+기능 단위로 테스트를 진행하기 때문에, 문제가 발견되지 않은 코드에 영향을 줄 수 있는 `오버 코딩은 하지 않는다.`   
 
-In the project directory, you can run:
+### 개발 과정이 테스트 코드로 남기 때문에, 과거 의사결정을 쉽게 상기할 수 있다.
+TDD를 사용하면, 테스트 코드를 작성하는 과정에서 히스토리가 남는다.   
+어떻게 보면 과거의 나 자신과 프로그래머가 협업하는 것을 용이하게 만들어준다고 할 수 있다.   
+TDD를 통해 작성한 테스트 코드를 트래킹하면서 과거에 어떤 인과관계로 의사결정을 했는지 확인하기 쉽다.   
+   
+# TDD에 관한 편견과 실상
+## TDD는 무조건 해야 한다?
+그렇지 않다.   ß
+TDD가 프로그래머에게 주는 이점에 대해 나열하면, TDD가 모두에게 필요한 것처럼 느껴질 수 있다.   
+하지만 프로그래머가 코드를 작성해 기능 하나를 추가할 때마다, 시간이 늘어난다고 본다면 TDD는 오히려 비효율적인 것처럼 보이기도 한다.   
+`TDD를 사용했을 때의 초기 비용은 TDD를 사용하지 않았을 때보다 크기 때문이다.`   
+   
+일단 운영 코드를 테스트하기 위한 코드를 프로그래머가 따로 작성해야 한다는 점만 보아도 그렇다.   
+그러므로 프로그래머는 하나의 프로젝트를 완성하는데 걸리는 예상 일정과 자원을 고려해야 한다.   
+이에 따라 TDD를 사용할 수도, 사용하지 않기로 결정할 수도 있다.   
+   
+물론 TDD를 사용하면, 일정 시점을 지나면 TDD를 사용하지 않을 때와 비교하여 `시간 대비 비용이 더 커지지 않고 일정하게 유지`된다.   
+즉, TDD를 사용하기 시작하면 초기 비용은 더 많이 들 수 있으나 전체적으로 봤을 때 비용이 점진적으로 늘어나지 않는다는 것이다.   
+   
+따라서, TDD를 위한 환경세팅이 이미 잘 되어 있는 업무 환경이라면 TDD를 사용하는 편이 장기적으로는 효과적이라 할 수 있다.   
 
-### `npm start`
+## TDD는 버그를 박멸한다?
+그렇지 않다.   
+TDD는 버그를 없애주는 도구가 아니기 때문이다.   
+오히려 TDD를 사용하면 더 많은 버그를 사전에 발견할 수 있다.   
+프로그래머가 작성한 코드가 사용자에게 도달하기 전에, 혹은 전체 코드를 완성하기 전에, 기능 단위로 문제를 개선할 수 있게끔 빠른 피드백을 전달하는 것이다.   
+그래서 `버그를 보다 빠르고 효과적으로 개선할 수 있도록` 프로그래머를 도와줄 수는 있다.   
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## TDD는 항상 느리다?
+그렇지 않다.   
+TDD를 업무에 사용할 때 업무 속도가 느려진다고 느끼는 것에는 여러 이유가 있다.   
+일단, TDD를 처음 도입하면 TDD를 사용하기 위해 필요한 초기 자원이 미진해서 속도가 나지 않는다고 생각할 수 있다.   
+회사에서 여러 프로그래머가 협업해야 하는 경우, TDD를 사용하기 위한 업무 프로세스가 익숙하지 않아 개발 속도가 느려진다고 느끼기도 한다.   
+   
+테스트 코드 작성에 대한 업무 부담감도 한 몫 한다.   
+테스트 자동화를 위해 필요한 코드까지 프로그래머가 작성하고 관리해야 하므로 오히려 더 늘어나 비효율적이라 여길 수 있다.   
+기억해야 할 것은 `TDD 자체가 목적이 되어서는 안 된다는 사실이다.`   
+TDD는 공동의 목표를 효율적으로 달성하기 위한 도구이다.   
+   
+# 테스트 기법의 종류와 장단점
+### 수동 테스트
+회사에서는 보통 QA라고 부르는 전문 담당자들이 UI를 활용해 기능을 검증한다.   
+사람이 검증하기 때문에, 사용자와 가장 가까운 관점에서 테스트가 가능하다.   
+소프트웨어의 모든 코드가 현장에 배치된 후에 테스트할 수 있다.   
+따라서 어떤 기능이 정상 작동하기 위해 필요한 모든 코드가 준비되어야 한다.   
+가장 온전한 전체 코드를 검증하는 테스트 방식이다.   
+   
+단점은, 실행 비용은 높은데 결과 변동이 크다는 점이다.   
+전문성을 지닌 담당자가 비용을 줄이기 위해 노력하지만, `휴먼 에러`의 가능성을 완전히 없애기는 어렵다.   
+또한 시간이 흐르면서 추가되는 기능은 자연스럽게 증가하는데, 문제는 어떤 기능을 추가하거나 개선하기 위해 작성한 코드는 다른 코드에 영향을 미친다는 점이다.   
+그래서 테스트를 진행하더라도, `새로 추가된 코드로 인해 영향을 받을 기준 코드에 대한 테스트는 건너뛰거나 충실히 진행하지 못하는 경우가 많다.`   
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### 테스트 자동화
+수동 테스트가 지닌 한계를 보완하기 위해 등장한 도구이다.   
+사람이 직접 테스트하지 않고, `어떤 기능을 검증하는 또 다른 코드를 작성`하는 방식이다.   
+   
+단점은, 수동 테스트에 비해 프로그래머가 더 많은 코드를 작성해야 한다는 점이다.   
+운영 코드를 테스트하기 위한 별도의 코드를 추가 작성해야 하기 때문이다.   
+`테스트 코드의 작성과 관리가 프로그래머 개인의 역량에 달려 있어`, 업무 자체가 허들이 될 수도 있다.   
+   
+반면, 테스트에 드는 비용은 매우 낮아진다는 점이 장점이다.   
+휴먼 에러의 가능성도 줄어들기 때문에, 수동 테스트에 비해 테스트 자체에 대한 `신뢰도는 매우 높아진다.`   
 
-### `npm test`
+### 인수 테스트
+배치된 시스템을 대상으로 검증하는 방식으로, 주로 클라이언트가 의뢰한 소프트웨어를 최종적으로 사용할 수 있는 수준인지 점검하는 테스트이다.   
+전체 시스템의 이상 여부가 없는지 확인하며, 사용자 관점으로 체크하기 때문에 신뢰도가 높은 테스트 방법이다.   
+   
+단, `비용이 매우 높다.`   
+코드 작성부터 관리, 테스트 실행까지 자원이 많이 들어간다.   
+또한 프로그래머 입장에서 받을 수 있는 피드백의 질이 떨어진다.   
+문제는 파악할 수 있으나, 그 원인까지 단번에 알려주지는 못하기 때문이다.   
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 단위 테스트
+인수 테스트의 단점을 보완하는 검증 방식이다.   
+단위 테스트는 시스템의 일부(하위 시스템)를 대상으로 기능을 검증하는 테스트이다.   
+전체 시스템을 배치해놓고 진행하지 않으므로, 비용이 상대적으로 낮은 편이다.   
+   
+인수 테스트와 비교해서, 단위 안에서 버그가 있다는 걸 상대적으로 자세히 알 수 있다.   
+따라서 프로그래머 입장에서는 `문제 해결을 위해 필요한 피드백을 적절하게 받을 수 있다.`   
+하지만 전체 시스템의 이상 여부를 판단하는 신뢰도는 낮아진다.   
+단위 테스트에서 문제가 없다고 판단되어도, 전체 시스템이 유기적으로 연결될 때 오류가 날 수도 있기 때문이다.   
+   
+# 테스트 주도 개발 프로세스
+## TDD의 메인 프로세스
+다음과 같이 3가지 단계로 나눌 수 있다.   
+   
+- RED: 테스트 실패   
+- GREEN: 테스트 성공   
+- REFACTOR: 리팩토링   
+   
+### RED: 테스트 실패
+- 구체적인 하나의 요구사항을 검증하는 하나의 테스트를 추가한다.   
+- 추가된 테스트가 실패하는지 확인한다.   
+   
+실패하는 것이 확인 되어야, 테스트가 검증력을 가진다고 신뢰할 수 있다.   
+실패의 이유는 운영 코드가 아직 변경되지 않았기 때문이어야 한다.   
+`테스트 코드의 문제이면 안 된다.`   
 
-### `npm run build`
+### GREEN: 테스트 성공
+- 추가된 테스트를 포함하여, 모든 테스트가 성공하게끔 운영 코드를 변경한다.   
+- 테스트의 성공은 모든 요구사항을 만족했음을 의미한다.   
+- 테스트의 성공을 위한 최소한의 코드 변경만 진행한다.   
+   
+TDD를 반복하다 보면, 지루함을 느끼는 프로그래머가 많다.   
+하지만 TDD에서는 테스트 성공을 위한 `최소한의 코드 그 이상을 변경하거나 추가하면 안 된다.`   
+테스트 되지 않은 코드가 중간에 추가되면, 이후 리팩토링 등의 다른 프로세스에서 어떤 부작용을 가져올지 알 수 없기 때문이다.   
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### REFACTOR: 리팩토링
+- 코드베이스를 정리한다.   
+- 인터페이스 뒤에 숨어 있는 `구현 설계를 개선`한다.   
+- 가독성, 적용성, 성능을 고려한다.   
+   
+## TDD 세부 프로세스
+`단위 테스트 작성 -> 단위 테스트 실행 -> 운영 코드 작성 -> 단위 테스트 실행 -> 설계 개선(리팩토링) -> 단위 테스트 -> ...` 실행 반복한다.
